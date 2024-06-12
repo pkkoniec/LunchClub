@@ -1,6 +1,8 @@
-package pl.lunchclub.common;
+package pl.lunchclub.invoice;
 
 import lombok.Getter;
+import pl.lunchclub.common.Either;
+import pl.lunchclub.common.Failure;
 
 @Getter
 public class InvoiceVatLine {
@@ -29,6 +31,7 @@ public class InvoiceVatLine {
                 net,
                 invoiceVat
         );
+
         return Either.right(new InvoiceVatLine(
                 gross,
                 net,
@@ -38,5 +41,14 @@ public class InvoiceVatLine {
                 ),
                 invoiceVat
         ));
+    }
+
+    public InvoiceVatLineJson asJson() {
+        return new InvoiceVatLineJson(
+                gross.asJson(),
+                net.asJson(),
+                vat.asJson(),
+                invoiceVat.asJson()
+        );
     }
 }

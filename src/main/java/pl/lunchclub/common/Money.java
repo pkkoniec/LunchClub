@@ -3,6 +3,8 @@ package pl.lunchclub.common;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Objects;
 
 public final class Money implements Comparable<Money>, Serializable {
@@ -31,6 +33,13 @@ public final class Money implements Comparable<Money>, Serializable {
         } catch (Exception e) {
             return Either.failure("MONEY_CANNOT_PARSE");
         }
+    }
+
+    public static Money sum(
+            Money addend1,
+            Money addend2
+    ) {
+        return new Money(addend1.amount.add(addend2.amount));
     }
 
     @Override
@@ -65,5 +74,19 @@ public final class Money implements Comparable<Money>, Serializable {
     @Override
     public String toString() {
         return "Money{" + amount + '}';
+    }
+
+    public MoneyJson asJson() {
+        return new MoneyJson(print());
+    }
+
+    public String print() {
+        //todo thread-safe ?
+        DecimalFormatSymbols instance = DecimalFormatSymbols.getInstance();
+        instance.setDecimalSeparator('.');
+        return new DecimalFormat(
+                "#0.00",
+                instance
+        ).format(amount);
     }
 }

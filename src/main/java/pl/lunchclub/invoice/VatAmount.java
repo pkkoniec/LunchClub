@@ -1,4 +1,7 @@
-package pl.lunchclub.common;
+package pl.lunchclub.invoice;
+
+import pl.lunchclub.common.Money;
+import pl.lunchclub.common.MoneyJson;
 
 import java.util.Objects;
 
@@ -36,5 +39,9 @@ public class VatAmount {
     @Override
     public String toString() {
         return "VatAmount{" + value + '}';
+    }
+
+    public MoneyJson asJson() {
+        return value.asJson();
     }
 }
