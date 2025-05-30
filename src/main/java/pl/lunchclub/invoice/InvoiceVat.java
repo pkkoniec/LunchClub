@@ -3,7 +3,7 @@ package pl.lunchclub.invoice;
 public sealed interface InvoiceVat permits InvoiceVat.Exempt, InvoiceVat.Payer {
     default InvoiceVatJson asJson() {
         return switch (this) {
-            case Exempt exempt -> new InvoiceVatJson(
+            case Exempt _ -> new InvoiceVatJson(
                     InvoiceVatJson.InvoiceVatTag.EXEMPT,
                     null
             );
